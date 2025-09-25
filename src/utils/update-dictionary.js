@@ -1,11 +1,6 @@
 const axios = require("axios");
 const fs = require("fs").promises;
-const path = require("path");
-
-const DICTIONARY_URL = "https://norvig.com/ngrams/enable1.txt";
-const DICTIONARY_FILE_PATH = path.join(process.cwd(), "src/assets/dictionary.txt");
-
-
+const { DICTIONARY_FILE_PATH, DICTIONARY_URL } = require("../config");
 
 const updateDictionary = async () => {
     const { data } = await axios.get(DICTIONARY_URL);

@@ -2,10 +2,11 @@
   "name": "umesh-word-square",
   "version": "1.0.0",
   "description": "Coding exercise for an interview.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "update-dictionary": "node src/utils/dictionary.js"
+    "update-dictionary": "node src/utils/update-dictionary.js",
+    "start": "node src/index.js"
   },
   "author": "Umesh",
   "license": "ISC",
