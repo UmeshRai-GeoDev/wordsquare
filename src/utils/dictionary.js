@@ -9,7 +9,7 @@ const DICTIONARY_FILE_PATH = path.join(process.cwd(), "src/assets/dictionary.txt
 
 const updateDictionary = async () => {
     const { data } = await axios.get(DICTIONARY_URL);
-    fs.writeFile(DICTIONARY_FILE_PATH, data);
+    await fs.writeFile(DICTIONARY_FILE_PATH, data);
 }
 
 try {
