@@ -3,7 +3,7 @@ class Trie {
     children;
 
     constructor() {
-        this.children = new Array(256);
+        this.children = new Array(26); // currently dictionary only contains lowercase alphabets
     }
     /**
      * @param word string

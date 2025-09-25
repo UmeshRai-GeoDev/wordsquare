@@ -1,0 +1,28 @@
+
+const { initialiseDictionary } = require("../utils/init-trie");
+let dictionary;
+
+beforeAll(async () => {
+    dictionary = await initialiseDictionary();
+});
+
+describe("Dictionary", () => {
+    it("shoud contain apple", () => {
+        expect(dictionary.contains("apple")).toBe(true);
+    });
+    it("should contain the last item from the text file", () => {
+        expect(dictionary.contains("zyzzyvas")).toBe(true);
+    });
+    it("should contain a long word from the dictionary", () => {
+        expect(dictionary.contains("acetylcholinesterases")).toBe(true);
+    });
+    it("should not contain word with type", () => {
+        expect(dictionary.contains("appple")).toBe(false);
+    });
+    it("should not contain numeric character", () => {
+        expect(dictionary.contains("app1e")).toBe(false);
+    });
+    it("should not contain space", () => {
+        expect(dictionary.contains(" ")).toBe(false);
+    });
+});
