@@ -1,8 +1,9 @@
 class Trie {
-    ended = false;
+    isWordEnded;
     children;
 
     constructor() {
+        this.isWordEnded = false;
         this.children = new Array(26); // currently dictionary only contains lowercase alphabets
     }
     /**
@@ -13,12 +14,10 @@ class Trie {
             const j = word.charCodeAt(i) - "a".charCodeAt(0);
             if (!root.children[j]) {
                 root.children[j] = new Trie();
-                if (i === word.length - 1) {
-                    root.ended = true;
-                }
             }
             root = root.children[j];
         }
+        root.isWordEnded = true;
     }
 
     /**
@@ -29,12 +28,10 @@ class Trie {
             const j = word.charCodeAt(i) - "a".charCodeAt(0);
             if (!root.children[j]) {
                 return false;
-            } else {
-
-                root = root.children[j];
             }
+            root = root.children[j];
         }
-        return true;
+        return root.isWordEnded;
     }
 }
 

@@ -25,4 +25,7 @@ describe("Dictionary", () => {
     it("should not contain space", () => {
         expect(dictionary.contains(" ")).toBe(false);
     });
+    it("should throw error with incomplete word", () => {
+        expect(dictionary.contains("ap")).toBe(false);
+    });
 });
