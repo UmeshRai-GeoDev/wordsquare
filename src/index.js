@@ -1,8 +1,8 @@
 const { initialiseDictionary } = require("./utils/init-trie");
 
 (async () => {
-    const wordDict = await initialiseDictionary();
-    console.log(wordDict.contains("ap"));
-
+    
+    const { wordDict, occuranceCounter } = await initialiseDictionary();
+    console.log(Object.entries(occuranceCounter).length)
 })();
 

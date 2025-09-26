@@ -4,12 +4,13 @@ const { DICTIONARY_FILE_PATH, DICTIONARY_URL } = require("../config");
 
 const updateDictionary = async () => {
     const { data } = await axios.get(DICTIONARY_URL);
+    console.log(data)
     await fs.writeFile(DICTIONARY_FILE_PATH, data);
 }
 
 try {
     updateDictionary();
-    console.log(`Dictionary successfully updated from ${DICTIONARY_FILE_PATH}`);
+    console.log(`Dictionary successfully updated from ${DICTIONARY_URL}`);
 } catch {
     console.error(`Something went wrong while updating the dictionary!`);
 }

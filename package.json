@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "update-dictionary": "node src/utils/update-dictionary.js",
+    "fetch-dictionary": "node src/utils/fetch-dictionary.js",
     "start": "node src/index.js"
   },
   "author": "Umesh",
