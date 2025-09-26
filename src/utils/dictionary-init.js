@@ -3,23 +3,15 @@ const readline = require("readline");
 
 const Tries = require("../class_lib/Trie");
 const { DICTIONARY_FILE_PATH } = require('../config');
-
-const countCharOccurance = (word) => {
-    const occurance = new Array(26).fill(0);
-
-    for (let char of word) {
-        let idx = char.charCodeAt(0) - "a".charCodeAt(0);
-        occurance[idx]++;
-    }
-    return occurance;
-}
+const { countCharOccurance } = require(".");
 
 /**
  * 
+ * @param {*} n 
  * @param {*} textfile 
  * @returns {Promise<{wordDict: Tries, occuranceCounter: Array}>}}
  */
-const initialiseDictionary = (n = 4, textfile = DICTIONARY_FILE_PATH) => {
+const initialiseDictionary = (n = 0, textfile = DICTIONARY_FILE_PATH) => {
 
     return new Promise((resolve, reject) => {
         const occuranceCounter = {};
@@ -32,10 +24,9 @@ const initialiseDictionary = (n = 4, textfile = DICTIONARY_FILE_PATH) => {
             });
 
             rl.on("line", (word) => {
-                if (word.length == n){
-                    occuranceCounter[word] = countCharOccurance(word);
-                    wordDict.insertWord(word);
-                }
+                if (!!n && word.length !== n) return;
+                occuranceCounter[word] = countCharOccurance(word);
+                wordDict.insertWord(word);
             });
 
             rl.on("close", () => {

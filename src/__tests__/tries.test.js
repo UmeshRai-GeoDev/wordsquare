@@ -1,9 +1,10 @@
 
-const { initialiseDictionary } = require("../utils/init-trie");
+const { initialiseDictionary } = require("../utils/dictionary-init");
 let dictionary;
 
 beforeAll(async () => {
-    dictionary = await initialiseDictionary();
+    const { wordDict } = await initialiseDictionary(30);
+    dictionary = wordDict;
 });
 
 describe("Dictionary", () => {
