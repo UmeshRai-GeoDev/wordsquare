@@ -1,72 +1,43 @@
+const CharsPool = require("./class_lib/CharsPool");
 const { countCharOccurance } = require("./utils");
 const { initialiseDictionary } = require("./utils/dictionary-init");
 
 // temp var 
-const n = 4, inputString = "eeeeddoonnnsssrv";
+const n = 4, inputString = "aaccdeeeemmnnnoo";
 const MAX_CHAR_COUNT = 26;
 
-const canCharsBuildValidWord = (inputOccurence, targetOccurence) => {
-    for (let i = 0; i < MAX_CHAR_COUNT; i++) {
-        if (inputOccurence[i] < targetOccurence[i]) return false;
-    }
-    return true;
-}
-
+const inputPool = new CharsPool(inputString);
 
 (async () => {
-    const { wordDict, occuranceCounter } = await initialiseDictionary(n);
-    const occuranceOfInputChars = countCharOccurance(inputString);
-    const possibleWords = [];
-    // Object.entries(occuranceCounter).filter(canCharsBuildValidWord(occuranceOfInputChars, occuranceOfDictionaryWord));
-
-    Object.entries(occuranceCounter).forEach(([word, occuranceOfDictionaryWord]) => {
-        if (canCharsBuildValidWord(occuranceOfInputChars, occuranceOfDictionaryWord)) {
-            possibleWords.push(word);
-        }
-    });
-
-    // init grid n*n grid
-
-    const isValid = (grid, idx) => {
-        if (idx == 0) return true;
-        const colwords = [];
-        for (let col = 0; col < n; col++) {
-            let tmpString = "";
-            for (let row = 0; row < grid.length; row++) {
-                tmpString += grid[row][col];
-            }
-            colwords.push(tmpString);
-        }
-        // debugger;
-        for (let word of colwords) {
-            if (!wordDict.isPotential(word)) {
-                return false;
-            }
-        }
-        debugger
-        return true;
-    }
-
+    const { wordDict } = await initialiseDictionary(n);
     const grid = [];
 
-    function recurse(grid, inputIndex = 0) {
-        if (inputIndex == n) {
-            console.log(grid)
-            return grid;
-        }
-        for (let i = inputIndex; i < possibleWords.length; i++) {
-            if (!isValid(grid, i)) {
-                return
+    function backtrack(rowIndex) {
+        if (rowIndex == n) {
+            if (inputPool.size() == 0) {
+                console.log(grid)
+                console.log("all is used")
             }
-            grid.push(possibleWords[i]);
-            recurse(grid, i + 1);
+        }
+        let prefix = "";
+        for (let i = 0; i < n; i++) { // loop column
+            if (grid[i] && grid[i][rowIndex]) {
+                prefix += grid[i][rowIndex];
+            }
+        }
+
+        for (let word of wordDict.getWordsWithPrefix(prefix)) {
+            if (!inputPool.hasWord(word)) continue;
+            grid.push(word);
+            inputPool.removeWord(word);
+
+            backtrack(rowIndex + 1);
+
             grid.pop();
-            recurse(grid, i + 1);
+            inputPool.addWord(word);
         }
     }
-
-    recurse(grid);
-    // console.log(grid);
-
+    backtrack(0);
+    return;
 })();
 

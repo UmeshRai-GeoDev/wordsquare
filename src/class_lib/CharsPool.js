@@ -1,7 +1,12 @@
 class CharsPool {
     constructor(inputCharactersAsString) {
         this.pool = {};
+        this.remaining = 0;
         this.addWord(inputCharactersAsString);
+    }
+
+    size() {
+        return this.remaining;
     }
 
     addWord(newWord) {
@@ -11,6 +16,7 @@ class CharsPool {
             } else {
                 this.pool[char] = 1;
             }
+            this.remaining++;
         }
     }
 
@@ -28,6 +34,7 @@ class CharsPool {
         }
         for (let char of word) {
             this.pool[char]--;
+            this.remaining--;
         }
     }
 }
