@@ -24,9 +24,49 @@ const canCharsBuildValidWord = (inputOccurence, targetOccurence) => {
             possibleWords.push(word);
         }
     });
-    debugger;
 
+    // init grid n*n grid
 
-    console.log(Object.entries(occuranceCounter).length)
+    const isValid = (grid, idx) => {
+        if (idx == 0) return true;
+        const colwords = [];
+        for (let col = 0; col < n; col++) {
+            let tmpString = "";
+            for (let row = 0; row < grid.length; row++) {
+                tmpString += grid[row][col];
+            }
+            colwords.push(tmpString);
+        }
+        // debugger;
+        for (let word of colwords) {
+            if (!wordDict.isPotential(word)) {
+                return false;
+            }
+        }
+        debugger
+        return true;
+    }
+
+    const grid = [];
+
+    function recurse(grid, inputIndex = 0) {
+        if (inputIndex == n) {
+            console.log(grid)
+            return grid;
+        }
+        for (let i = inputIndex; i < possibleWords.length; i++) {
+            if (!isValid(grid, i)) {
+                return
+            }
+            grid.push(possibleWords[i]);
+            recurse(grid, i + 1);
+            grid.pop();
+            recurse(grid, i + 1);
+        }
+    }
+
+    recurse(grid);
+    // console.log(grid);
+
 })();
 

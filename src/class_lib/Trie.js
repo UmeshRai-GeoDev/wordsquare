@@ -33,6 +33,19 @@ class Trie {
         }
         return root.isWordEnded;
     }
+    /**
+     * @param word string
+     */
+    isPotential = (word, root = this) => {
+        for (let i = 0; i < word.length; i++) {
+            const j = word.charCodeAt(i) - "a".charCodeAt(0);
+            if (!root.children[j]) {
+                return false;
+            }
+            root = root.children[j];
+        }
+        return true;
+    }
 }
 
 module.exports = Trie;
