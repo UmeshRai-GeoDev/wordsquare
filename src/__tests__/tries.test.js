@@ -3,7 +3,7 @@ const { initialiseDictionary } = require("../utils/dictionary-init");
 let dictionary;
 
 beforeAll(async () => {
-    const { wordDict } = await initialiseDictionary(30);
+    const { wordDict } = await initialiseDictionary();
     dictionary = wordDict;
 });
 
