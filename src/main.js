@@ -12,37 +12,44 @@ const inputPool = new CharsPool(inputString);
     const { wordDict } = await initialiseDictionary(n);
     const grid = [];
 
-    function backtrack(rowIndex) {
-        if (rowIndex == n) {
-            if (inputPool.size() == 0) {
-                return grid;
+    function* solveWordSquare() {
+        function* backtrack(rowIndex) {
+            if (rowIndex == n) {
+                if (inputPool.size() == 0) {
+                    yield [...grid];
+                }
             }
-        }
-        let prefix = "";
-        for (let i = 0; i < n; i++) { // loop column
-            if (grid[i] && grid[i][rowIndex]) {
-                prefix += grid[i][rowIndex];
-            }
-        }
-
-        for (let word of wordDict.getWordsWithPrefix(prefix)) {
-            if (!inputPool.hasWord(word)) continue;
-            grid.push(word);
-            inputPool.removeWord(word);
-
-            if (backtrack(rowIndex + 1)) {
-                return grid;
+            let prefix = "";
+            for (let i = 0; i < n; i++) { // loop column
+                if (grid[i] && grid[i][rowIndex]) {
+                    prefix += grid[i][rowIndex];
+                }
             }
 
-            grid.pop();
-            inputPool.addWord(word);
+            for (let word of wordDict.getWordsWithPrefix(prefix)) {
+                if (!inputPool.hasWord(word)) continue;
+                grid.push(word);
+                inputPool.removeWord(word);
+
+                yield* (backtrack(rowIndex + 1));
+
+                grid.pop();
+                inputPool.addWord(word);
+            }
         }
+        yield* backtrack(0);
     }
-    backtrack(0);
 
-    for (let i = 0; i < grid.length; i++) {
-        console.log(grid[i].split("").join(" "));
+    const results = [];
+    for (let r of solveWordSquare()) {
+        results.push(r);
     }
-    console.log()
+    console.log(results);
+
+
+    // for (let i = 0; i < grid.length; i++) {
+    //     console.log(grid[i].split("").join(" "));
+    // }
+    // console.log()
 })();
 
