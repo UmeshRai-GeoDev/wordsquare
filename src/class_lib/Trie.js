@@ -4,7 +4,7 @@ class Trie {
 
     constructor() {
         this.isWordEnded = false;
-        this.children = new Array(26); // currently dictionary only contains lowercase alphabets
+        this.children = new Array(26); // dictionary contains lowercase alphabets
     }
 
     static indexOf(char) {
@@ -67,7 +67,7 @@ class Trie {
         if (node.isWordEnded) out.push(path);
         for (let j = 0; j < 26; j++) {
             const child = node.children[j];
-            debugger
+            // debugger
             if (child) this._collect(child, path + String.fromCharCode(97 + j), out);
         }
     }

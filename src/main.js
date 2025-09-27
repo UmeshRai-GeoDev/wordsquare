@@ -1,55 +1,27 @@
-const CharsPool = require("./class_lib/CharsPool");
-const { countCharOccurance } = require("./utils");
+const WordSquareSolver = require("./class_lib/WordSquareSolver");
 const { initialiseDictionary } = require("./utils/dictionary-init");
 
-// temp var 
-const n = 4, inputString = "aaccdeeeemmnnnoo";
-const MAX_CHAR_COUNT = 26;
-
-const inputPool = new CharsPool(inputString);
+const args = process.argv.slice(2);
+const n = +args[0] || 0, inputString = args[1] || "", mode = args[2] || undefined;
 
 (async () => {
     const { wordDict } = await initialiseDictionary(n);
-    const grid = [];
+    const solver = new WordSquareSolver(n, inputString, wordDict);
+    let result = [];
 
-    function* solveWordSquare() {
-        function* backtrack(rowIndex) {
-            if (rowIndex == n) {
-                if (inputPool.size() == 0) {
-                    yield [...grid];
-                }
-            }
-            let prefix = "";
-            for (let i = 0; i < n; i++) { // loop column
-                if (grid[i] && grid[i][rowIndex]) {
-                    prefix += grid[i][rowIndex];
-                }
-            }
-
-            for (let word of wordDict.getWordsWithPrefix(prefix)) {
-                if (!inputPool.hasWord(word)) continue;
-                grid.push(word);
-                inputPool.removeWord(word);
-
-                yield* (backtrack(rowIndex + 1));
-
-                grid.pop();
-                inputPool.addWord(word);
-            }
-        }
-        yield* backtrack(0);
+    switch (mode) {
+        case "all":
+            result = solver.getAllsolutions();
+            for (let r of result) WordSquareSolver.printGrid(r);
+            break;
+        case "last":
+            result = solver.getLastSolution();
+            WordSquareSolver.printGrid(result);
+            break;
+        default:
+            result = solver.getFirstSolution();
+            WordSquareSolver.printGrid(result);
+            break;
     }
-
-    const results = [];
-    for (let r of solveWordSquare()) {
-        results.push(r);
-    }
-    console.log(results);
-
-
-    // for (let i = 0; i < grid.length; i++) {
-    //     console.log(grid[i].split("").join(" "));
-    // }
-    // console.log()
 })();
 
