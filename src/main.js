@@ -15,8 +15,7 @@ const inputPool = new CharsPool(inputString);
     function backtrack(rowIndex) {
         if (rowIndex == n) {
             if (inputPool.size() == 0) {
-                console.log(grid)
-                console.log("all is used")
+                return grid;
             }
         }
         let prefix = "";
@@ -31,13 +30,15 @@ const inputPool = new CharsPool(inputString);
             grid.push(word);
             inputPool.removeWord(word);
 
-            backtrack(rowIndex + 1);
+            if (backtrack(rowIndex + 1)) {
+                return grid;
+            }
 
             grid.pop();
             inputPool.addWord(word);
         }
     }
     backtrack(0);
-    return;
+    console.log(grid);
 })();
 
