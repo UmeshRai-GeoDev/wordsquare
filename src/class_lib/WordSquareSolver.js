@@ -30,7 +30,7 @@ class WordSquareSolver {
                     prefix += grid[i][rowIndex];
                 }
             }
-
+            
             for (let word of this.wordDict.getWordsWithPrefix(prefix)) {
                 if (!this.inputPool.hasWord(word)) continue;
                 grid.push(word);
