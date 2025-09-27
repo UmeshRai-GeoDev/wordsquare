@@ -16,12 +16,19 @@ node src/main.js 4 eeeeddoonnnsssrv all
 This exercise was completed using nodejs `v22.17.0`, and compatibility with other version has not been tested.
 Please run `npm install` after cloning the repo. 
 
-#### Updating the copy of dictionary
+#### Running the solver 
+Please refer to the optional arguments mentioned above.
+```
+# npm start <n> <charcters-as-string> <optional-arguments>
+# example
+npm start 4 eeeeddoonnnsssrv last
+```
+
+#### Updating the dictionary
 This repo contains a local copy of dictionary on `assets/dictionary.txt` file. To update it from the internet please run:
 ```
 npm run fetch-dictionary
 ```
-
 
 #### Running the test
 Please run the following to carry out unit tests. 
@@ -29,10 +36,3 @@ Please run the following to carry out unit tests.
 npm run test
 ```
 
-#### Running the solver 
-Please fun the following
-```
-# npm start <n> <charcters-as-string> <optional-arguments>
-# example
-npm start 4 eeeeddoonnnsssrv last
-```
