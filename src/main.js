@@ -39,6 +39,10 @@ const inputPool = new CharsPool(inputString);
         }
     }
     backtrack(0);
-    console.log(grid);
+
+    for (let i = 0; i < grid.length; i++) {
+        console.log(grid[i].split("").join(" "));
+    }
+    console.log()
 })();
 
