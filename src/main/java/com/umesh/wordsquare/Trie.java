@@ -1,3 +1,5 @@
+package com.umesh.wordsquare;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +21,20 @@ public class Trie {
         word = word.toLowerCase();
         Trie node = this;
         for (char c : word.toCharArray()) {
-            int j = indexOf(c);
+            int j = indexOf(c) ;
             if (node.children[j] == null) {
                 node.children[j] = new Trie();
             }
             node = node.children[j];
         }
+        node.isWordEnded = true;
     }
 
     public boolean contains(String word) {
         Trie root = this;
         for (char c : word.toCharArray()) {
             int j = Trie.indexOf(c);
-            if (root.children[c] == null) {
+            if (root.children[j] == null) {
                 return false;
             }
             root = root.children[j];
@@ -43,7 +46,7 @@ public class Trie {
         Trie root = this;
         for (char c : word.toCharArray()) {
             int j = Trie.indexOf(c);
-            if (root.children[c] == null) {
+            if (root.children[j] == null) {
                 return false;
             }
             root = root.children[j];
@@ -52,9 +55,9 @@ public class Trie {
     }
 
     public List<String> getWordsWithPrefix(String prefix) {
-        ArrayList<String> output = new ArrayList<String>();
+        ArrayList<String> output = new ArrayList<>();
         Trie root = this;
-        if (isPotential(prefix)) {
+        if (!isPotential(prefix)) {
             return output;
         }
         for (char c : prefix.toCharArray()) {

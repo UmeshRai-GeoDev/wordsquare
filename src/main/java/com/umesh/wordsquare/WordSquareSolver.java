@@ -1,3 +1,4 @@
+package com.umesh.wordsquare;
 
 import java.lang.StringBuilder;
 import java.util.ArrayList;
@@ -5,47 +6,49 @@ import java.util.ArrayList;
 public class WordSquareSolver {
 
     private int n;
-    private CharsPool inputPool;
-    private Trie wordDict;
-    private ArrayList<ArrayList<String>> result;
+    private final CharsPool inputPool;
+    private final Trie wordDict;
+    private final ArrayList<ArrayList<String>> result;
 
     WordSquareSolver(int n, String input, Trie wordDict) {
         this.n = n;
         this.inputPool = new CharsPool(input);
         this.wordDict = wordDict;
-        this.result = new ArrayList<>();
-        this.backtrack(0);
+        this.result = new ArrayList<ArrayList<String>>();
+        this.solve();
 
     }
 
-    static void printGrid(String[] grid) {
-        if (grid.length < 1) {
+    static void printGrid(ArrayList<String> grid) {
+        if (grid.isEmpty()) {
             System.out.println("No results for the given input!");
         }
 
         for (String word : grid) {
             System.out.println(
                     String.join(" ", word.split("")));
-            System.out.println();
         }
+        System.out.println();
     }
 
-    private ArrayList<String> backtrack(int rowIndex) {
+    private void solve() {
         ArrayList<String> grid = new ArrayList<String>();
+        backtrack(0, grid);
+    }
+
+    private ArrayList<String> backtrack(int rowIndex, ArrayList<String> grid) {
         StringBuilder prefixBuilder = new StringBuilder();
         String prefix = "";
 
         if (rowIndex == this.n) {
             if (inputPool.size() == 0) {
+                this.result.add((ArrayList) grid.clone());
                 return grid;
             }
+            return null;
         }
-
-        for (int i = 0; i < this.n; i++) {
-            Character c = grid.get(i).toCharArray()[rowIndex];
-            if (c != null) {
-                prefixBuilder.append(c);
-            }
+        for (int i = 0; i < rowIndex; i++) {
+            prefixBuilder.append(grid.get(i).charAt(rowIndex));
         }
         prefix = prefixBuilder.toString();
         for (String word : this.wordDict.getWordsWithPrefix(prefix)) {
@@ -53,25 +56,23 @@ public class WordSquareSolver {
                 continue;
             }
             grid.add(word);
-            inputPool.addWord(word);
-
-            if (backtrack(rowIndex + 1) != null) {
-                result.add(grid);
-            }
-
-            grid.remove(grid.size() - 1);
             inputPool.removeWord(word);
 
+             backtrack(rowIndex + 1, grid);
+
+            grid.removeLast();
+            inputPool.addWord(word); // put the word back when backtracking
+
         }
-        return null;
+        return grid;
     }
 
     public ArrayList<String> getFirstSolution() {
-        return result.get(0);
+        return result.getFirst();
     }
 
     public ArrayList<String> getLastSolution() {
-        return result.get(result.size() - 1);
+        return result.getLast();
     }
 
     public ArrayList<ArrayList<String>> getAllSolution() {
