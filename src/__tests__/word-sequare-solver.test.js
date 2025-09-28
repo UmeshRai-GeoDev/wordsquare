@@ -20,12 +20,7 @@ describe("WordSquareSolver", () => {
     });
     it('should get first result', () => {
         let solver = new WordSquareSolver(4, "eeeeddoonnnsssrv", dictionary);
-        expect(solver.getFirstSolution()).toEqual(expect.arrayContaining([
-            "dens",
-            "even",
-            "nene",
-            "sned"
-        ]));
+        expect(solver.getFirstSolution()).toEqual(expect.arrayContaining(["rose", "oven", "send", "ends"]));
     });
 
     it('should get all possible solutions ', () => {

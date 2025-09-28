@@ -2,7 +2,7 @@ const WordSquareSolver = require("./class_lib/WordSquareSolver");
 const { initialiseDictionary } = require("./utils/dictionary-init");
 
 const args = process.argv.slice(2);
-const n = +args[0] || 0, inputString = args[1] || "", mode = args[2] || undefined;
+const n = +args[0] || 4, inputString = args[1] || "eeeeddoonnnsssrv", mode = args[2] || undefined;
 
 (async () => {
     const { wordDict } = await initialiseDictionary(n);

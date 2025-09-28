@@ -21,7 +21,15 @@ class CharsPool {
     }
 
     hasWord(word) {
-        const counter = word.split("").reduce((acc, d) => ({ [d]: acc[d] + 1 || 1 }), {})
+        const counter = {};
+        for (let char of word) {
+            if (counter[char]) {
+                counter[char]++;
+            } else {
+                counter[char] = 1;
+            }
+        }
+
         for (let char of word) {
             if (!this.pool[char]) return false;
             if (counter[char] > this.pool[char]) return false;
