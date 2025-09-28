@@ -18,7 +18,7 @@ public class App {
         switch (mode) {
             case "all":
                 ArrayList<ArrayList<String>> solutions = solver.getAllSolution();
-                System.out.println("Total solution(s) found: " + solutions.size() + ".");
+                System.out.println("Total solution(s) found: " + solutions.size() + "\n");
                 for (ArrayList<String> s : solutions) {
                     WordSquareSolver.printGrid(s);
                 }
