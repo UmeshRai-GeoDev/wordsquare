@@ -1,5 +1,9 @@
 # Word Square Solver (Java version)
 
+## Dependencies 
+- Apache Maven `3.9.10`
+- OpenJDK `21.0.7`
+
 ## Getting started
 
 ```
