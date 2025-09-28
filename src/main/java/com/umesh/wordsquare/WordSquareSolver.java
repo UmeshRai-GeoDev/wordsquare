@@ -42,7 +42,7 @@ public class WordSquareSolver {
 
         if (rowIndex == this.n) {
             if (inputPool.size() == 0) {
-                this.result.add((ArrayList) grid.clone());
+                this.result.add(new ArrayList<String>(grid));
                 return grid;
             }
             return null;
